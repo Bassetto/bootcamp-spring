@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+    <title>Lista de Bootcamps</title>
+</head>
+<body>
+
+<main class="container">
+    <header class="p-3 mb-3 border-bottom">
+        <div class="containerjustify-content-center">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/}" class="nav-link px-2 link-dark">Home</a></li>
+                <li><a th:href="@{/bootcamp/listar}" class="nav-link px-2 disabled">Lista de Bootcamps</a></li>
+                <li><a th:href="@{/bootcamp/cadastrar}" class="nav-link px-2 link-dark">Cadastrar bootcamp</a></li>
+                <li><a th:href="@{/cadastro}" class="nav-link px-2 link-dark">Cadastrar candidato</a></li>
+                <li><a th:href="@{/login}" class="nav-link px-2 link-dark">Fazer login</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="mx-1 my-1">
+        <div th:each="bootcamp, i : ${bootcamps}">
+            <div class="card text-center my-2">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p class="text-center fs-3 fw-bold">Nome do Bootcamp</p>
+                            <p class="text fs-3" th:text="${bootcamps[__${i.index}__].nome}">Nome: </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-center fs-3 fw-bold">Area do Bootcamp</p>
+                            <p class="text fs-3" th:text="${bootcamps[__${i.index}__].area}">Area: </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-center fs-3 fw-bold">Status do Bootcamp</p>
+                            <p class="text fs-3" th:text="${bootcamps[__${i.index}__].status}">Status: </p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-center fs-3 fw-bold">Data do Bootcamp</p>
+                            <p class="text fs-3" th:text="${#dates.formatISO(bootcamps[__${i.index}__].data)}">
+                                Data: </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <p class="text fs-3 fw-bold text-center">Local:</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-wrap fs-3"
+                               th:text="${bootcamps[__${i.index}__].espaco.logradouro} + ', ' + ${bootcamps[__${i.index}__].espaco.numero}"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text fs-3" th:text="'CEP: ' + ${bootcamps[__${i.index}__].espaco.cep}"></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text fs-3"
+                               th:text="'Capacidade de Pessoas: ' + ${bootcamps[__${i.index}__].espaco.capacidadePessoas}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body border-bottom">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-center fs-3 fw-bold">Plano de Treinamento do Bootcamp</p>
+                            <p class="text fs-3" th:text="${bootcamps[__${i.index}__].planoTreinamento}">Plano de
+                                Treinamento: </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-center fs-3 fw-bold">Conteúdo do Bootcamp</p>
+                            <p class="text fs-3" th:text="${bootcamps[__${i.index}__].conteudo}">Conteúdo: </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 px-1" th:if="${bootcamps[__${i.index}__].candidatos} != null">
+                            <p class="text-center fs-3 fw-bold">Professores</p>
+                            <ul th:each="professor, j : ${bootcamps[__${i.index}__].professores}">
+                                <li class="text fs-3"
+                                    th:text="${bootcamps[__${i.index}__].professores[__${j.index}__].nome}"></li>
+                                <li class="text fs-3"
+                                    th:text="${bootcamps[__${i.index}__].professores[__${j.index}__].email}"></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 px-1" th:if="${bootcamps[__${i.index}__].professores} != null">
+                            <p class="text-center fs-3 fw-bold">Candidatos</p>
+                            <ul th:each="candidato, c : ${bootcamps[__${i.index}__].candidatos}">
+                                <li class="text fs-3"
+                                    th:text="${bootcamps[__${i.index}__].candidatos[__${c.index}__].nome}"></li>
+                                <li class="text fs-3"
+                                    th:text="${bootcamps[__${i.index}__].candidatos[__${c.index}__].email}"></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 px-1">
+                            <p class="text-center fs-3 fw-bold">Coach</p>
+                            <ul>
+                                <li class="text fs-3" th:text="${bootcamps[__${i.index}__].coach.nome}"></li>
+                                <li class="text fs-3" th:text="${bootcamps[__${i.index}__].coach.email}"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer btn-group">
+                    <a role="button" th:href="@{/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})}"
+                       class="btn btn-warning">Editar</a>
+                    <a role="button" th:href="@{/bootcamp/deletar/{id}(id = ${bootcamps[__${i.index}__].id})}"
+                       class="btn btn-danger">Deletar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

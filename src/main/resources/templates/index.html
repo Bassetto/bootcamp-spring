@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+    <title>PS13SI - Bootcamps</title>
+</head>
+<body>
+
+<main class="container">
+    <header class="p-3 mb-3 border-bottom">
+        <div class="containerjustify-content-center">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/}" class="nav-link px-2 disabled">Home</a></li>
+                <li><a th:href="@{/bootcamp/listar}" class="nav-link px-2 link-dark">Lista de Bootcamps</a></li>
+                <li><a th:href="@{/bootcamp/cadastrar}" class="nav-link px-2 link-dark">Cadastrar bootcamp</a></li>
+                <li><a th:href="@{/cadastro}" class="nav-link px-2 link-dark">Cadastrar candidato</a></li>
+                <li><a th:href="@{/login}" class="nav-link px-2 link-dark">Fazer login</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="text-center">
+        <p class="title fs-5 fw-bold">Salve</p>
+        <div class="btn-group">
+            <a role="button" type="button" th:href="@{/bootcamp/cadastrar}" class="btn btn-secondary">Cadastrar
+                Bootcamp</a>
+            <a role="button" type="button" th:href="@{/bootcamp/listar}" class="btn btn-primary">Listar Bootcamps</a>
+        </div>
+    </div>
+</main>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

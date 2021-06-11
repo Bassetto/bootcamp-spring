@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+        rel="stylesheet"/>
+    <title>Login</title>
+</head>
+<body>
+  <main class="container text-center">
+    <form method="post" th:action="@{/authenticate}">
+      <div class="form-floating my-2">
+        <input type="email" class="form-control" id="email" th:field="${usuario.email}" placeholder="Digite seu e-mail">
+        <label for="email">Endereço de e-mail</label>
+      </div>
+      <div class="form-floating my-2">
+        <input type="password" class="form-control" id="senha" th:field="${usuario.senha}" placeholder="Digite sua senha">
+        <label for="senha">Senha</label>
+      </div>
+      <div class="btn-group my-2">
+        <button type="submit" class="btn btn-primary">Logar</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

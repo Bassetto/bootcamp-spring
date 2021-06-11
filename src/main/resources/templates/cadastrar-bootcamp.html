@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+    <title>Cadastro de Bootcamp</title>
+</head>
+<body>
+
+<main class="container">
+    <form th:action="@{/bootcamp/salvar}" method="post" class="">
+        <div>
+            <div class="form-floating my-2">
+                <input required type="text" class="form-control" id="nome" th:field="*{bootcamp.nome}"
+                       placeholder="Digite o nome do bootcamp">
+                <label for="nome">Nome do Bootcamp</label>
+            </div>
+            <div class="form-floating my-2">
+                <input required type="text" class="form-control" id="area" th:field="*{bootcamp.area}"
+                       placeholder="Digite a area do bootcamp">
+                <label for="area">Área</label>
+            </div>
+            <div class="form-floating my-2">
+                <textarea type="text" class="form-control" id="plano" th:field="*{bootcamp.planoTreinamento}"
+                          placeholder="Digite o plano de treinamento para o bootcamp"></textarea>
+                <label for="plano">Plano de treinamento</label>
+            </div>
+            <div class="form-floating my-2">
+                <input required type="text" class="form-control" id="conteudo" th:field="*{bootcamp.conteudo}"
+                       placeholder="Digite o conteúdo do bootcamp">
+                <label for="conteudo">Conteúdo</label>
+            </div>
+            <div class="form-floating my-2">
+                <input required type="date" class="form-control" th:field="*{bootcamp.data}" id="data"
+                       placeholder="Digite a data do bootcamp">
+                <label for="data">Data do Bootcamp</label>
+            </div>
+            <input required type="hidden" name="status"
+                   th:value="${T(br.com.fiap.bootcamp.entity.StatusBootcamp).PLANEJAMENTO}">
+        </div>
+        <div class="my-2">
+            <div class="text-center">
+                <h3>Coach</h3>
+            </div>
+            <div class="input-group my-2 justify-content-center">
+                <div class="form-floating col-md-3 mx-2">
+                    <input required type="text" class="form-control" id="nomeCoach" th:field="*{bootcamp.coach.nome}"
+                           placeholder="Digite o nome do coach do bootcamp">
+                    <label for="nomeCoach">Nome do Coach</label>
+                </div>
+                <div class="form-floating col-md-3 mx-2">
+                    <input required type="email" class="form-control" id="emailCoach" th:field="*{bootcamp.coach.email}"
+                           placeholder="Digite o email do coach ao bootcamp">
+                    <label for="emailCoach">Email do Coach</label>
+                </div>
+                <div class="form-floating col-md-3 mx-2">
+                    <input required type="password" class="form-control" id="senhaCoach"
+                           th:field="*{bootcamp.coach.senha}" placeholder="Digite a senha do coach ao bootcamp">
+                    <label for="senhaCoach">Senha do Coach</label>
+                </div>
+                <div>
+                    <input required type="hidden" name="tipo"
+                           th:value="${T(br.com.fiap.bootcamp.entity.TipoUsuario).PROFESSOR}">
+                </div>
+            </div>
+        </div>
+        <div class="my-4">
+            <div class="text-center">
+                <h3>Espaço</h3>
+            </div>
+            <div class="input-group justify-content-center">
+                <div class="row">
+                    <div class="form-floating col-sm-9">
+                        <input required type="text" class="form-control" id="logradouroEspaco"
+                               th:field="*{bootcamp.espaco.logradouro}"
+                               placeholder="Digite o logradouro do local do bootcamp">
+                        <label for="logradouroEspaco">Logradouro</label>
+                    </div>
+                    <div class="form-floating col-sm-2">
+                        <input required type="number" class="form-control" id="numeroEspaco"
+                               th:field="*{bootcamp.espaco.numero}" placeholder="Digite o número do local do bootcamp">
+                        <label for="numeroEspaco">Número</label>
+                    </div>
+                </div>
+                <div class="form-floating col-md-3">
+                    <input required type="number" class="form-control" id="cepEspaco" maxlength="8"
+                           th:field="*{bootcamp.espaco.cep}" placeholder="Digite o cep do local do bootcamp">
+                    <label for="cepEspaco">CEP</label>
+                </div>
+                <div class="form-floating col-md-3">
+                    <input required type="number" class="form-control" id="numeroCapacidade"
+                           th:field="*{bootcamp.espaco.capacidadePessoas}"
+                           placeholder="Digite a capacidade de pessoas do local do bootcamp">
+                    <label for="numeroCapacidade">Capacidade de pessoas </label>
+                </div>
+            </div>
+        </div>
+        <div class="my-2">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+    </form>
+</main>
+</body>
+</html>

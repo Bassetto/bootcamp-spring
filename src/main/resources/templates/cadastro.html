@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+    <title>Cadastro</title>
+</head>
+<body>
+<main class="container text-center">
+    <form method="post" th:action="@{/registrar}">
+        <div class="form-floating my-2">
+            <input type="text" class="form-control" id="nome" th:field="${usuario.nome}"
+                   placeholder="Digite seu nome" required>
+            <label for="nome">Nome</label>
+        </div>
+        <div class="form-floating my-2">
+            <input type="email" class="form-control" id="email" th:field="${usuario.email}"
+                   placeholder="Digite seu e-mail" required>
+            <label for="email">Endereço de e-mail</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="senha" th:field="${usuario.senha}"
+                   placeholder="Digite sua senha" required>
+            <label for="senha">Senha</label>
+        </div>
+<!--        <div class="">-->
+<!--            <select name="tipo" th:field="${usuario.tipo}">-->
+<!--                    <option th:each="tipo : ${T(br.com.fiap.bootcamp.entity.TipoUsuario).values()}" th:value="${tipo.getValue()}" th:label="${tipo.name()}"></option>-->
+<!--            </select>-->
+<!--        </div>-->
+        <input type="hidden" name="tipo" th:value="${T(br.com.fiap.bootcamp.entity.TipoUsuario).CANDIDATO}" required>
+        <div>
+            <div class="btn-group my-2">
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </form>
+</main>
+</body>
+</html>
