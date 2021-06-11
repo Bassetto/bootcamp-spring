@@ -55,15 +55,19 @@ public class BootcampServiceImpl implements BootcampService {
         Optional<BootcampEntity> bootcampOpt = bootcampRepository.findById(bootcampId);
         if (bootcampOpt.isPresent()) {
             BootcampEntity entity = bootcampOpt.get();
-            List<UsuarioEntity> entityProfessores = entity.getProfessores();
-            professoresOpts.forEach(professor -> {
-                if (professor.isPresent()) {
-                    if (!entityProfessores.contains(professor.get()) && professor.get().getTipo() == TipoUsuario.PROFESSOR) {
-                        entityProfessores.add(professor.get());
+            List<UsuarioEntity> professoresEntities = entity.getProfessores();
+            UsuarioEntity professor;
+            for (int i = 0; i < professoresOpts.size(); i++) {
+                if (professoresOpts.get(i).isPresent()) {
+                    professor = professoresOpts.get(i).get();
+                    if (!professoresEntities.contains(professor)) {
+                        professoresEntities.add(professor);
                     }
+                } else {
+                    professoresEntities.add(usuarioService.save(professores.get(i)));
                 }
-            });
-            entity.setProfessores(entityProfessores);
+            }
+            entity.setProfessores(professoresEntities);
             bootcampRepository.save(entity);
             return "Professores adicionados";
         }
@@ -76,11 +80,11 @@ public class BootcampServiceImpl implements BootcampService {
         Optional<BootcampEntity> bootcampOpt = bootcampRepository.findById(bootcampId);
         if (bootcampOpt.isPresent()) {
             BootcampEntity entity = bootcampOpt.get();
-            List<UsuarioEntity> entityProfessores = entity.getProfessores();
+            List<UsuarioEntity> professoresEntities = entity.getProfessores();
             professoresOpts.forEach(professor -> {
-                professor.ifPresent(entityProfessores::remove);
+                professor.ifPresent(professoresEntities::remove);
             });
-            entity.setProfessores(entityProfessores);
+            entity.setProfessores(professoresEntities);
             bootcampRepository.save(entity);
             return "Professores removidos";
         }
@@ -93,15 +97,19 @@ public class BootcampServiceImpl implements BootcampService {
         Optional<BootcampEntity> bootcampOpt = bootcampRepository.findById(bootcampId);
         if (bootcampOpt.isPresent()) {
             BootcampEntity entity = bootcampOpt.get();
-            List<UsuarioEntity> entityCandidatos = entity.getCandidatos();
-            candidatosOpts.forEach(candidato -> {
-                if (candidato.isPresent()) {
-                    if (!entityCandidatos.contains(candidato.get()) && candidato.get().getTipo() == TipoUsuario.CANDIDATO) {
-                        entityCandidatos.add(candidato.get());
+            List<UsuarioEntity> candidatosEntities = entity.getCandidatos();
+            UsuarioEntity candidato;
+            for (int i = 0; i < candidatosOpts.size(); i++) {
+                if (candidatosOpts.get(i).isPresent()) {
+                    candidato = candidatosOpts.get(i).get();
+                    if (!candidatosEntities.contains(candidato)) {
+                        candidatosEntities.add(candidato);
                     }
+                } else {
+                    candidatosEntities.add(usuarioService.save(candidatos.get(i)));
                 }
-            });
-            entity.setCandidatos(entityCandidatos);
+            }
+            entity.setCandidatos(candidatosEntities);
             bootcampRepository.save(entity);
             return "Candidatos adicionados";
         }
@@ -114,11 +122,11 @@ public class BootcampServiceImpl implements BootcampService {
         Optional<BootcampEntity> bootcampOpt = bootcampRepository.findById(bootcampId);
         if (bootcampOpt.isPresent()) {
             BootcampEntity entity = bootcampOpt.get();
-            List<UsuarioEntity> entityCandidatos = entity.getCandidatos();
+            List<UsuarioEntity> candidatosEntities = entity.getCandidatos();
             candidatosOpts.forEach(candidato -> {
-                candidato.ifPresent(entityCandidatos::remove);
+                candidato.ifPresent(candidatosEntities::remove);
             });
-            entity.setCandidatos(entityCandidatos);
+            entity.setCandidatos(candidatosEntities);
             bootcampRepository.save(entity);
             return "Candidatos removidos";
         }
