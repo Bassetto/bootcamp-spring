@@ -104,8 +104,7 @@ public class BootcampServiceImpl implements BootcampService {
                     candidato = candidatosOpts.get(i).get();
                     if (!candidatosEntities.contains(candidato)) {
                         candidatosEntities.add(candidato);
-                    }
-                } else {
+                    }                } else {
                     candidatosEntities.add(usuarioService.save(candidatos.get(i)));
                 }
             }

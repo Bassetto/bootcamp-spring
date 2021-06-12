@@ -88,6 +88,22 @@
                                 <li class="text fs-3"
                                     th:text="${bootcamps[__${i.index}__].professores[__${j.index}__].email}"></li>
                             </ul>
+                            <form class="input-group" method="post" th:action="@{/bootcamp/professores/add}">
+                                <div class="form-floating">
+                                    <input required type="email" class="form-control" id="addProfessorEmail"
+                                           th:field="*{addProfessor.email}"
+                                           placeholder="Digite o email do professor que deseja adicionar">
+                                    <label for="addProfessorEmail">Email</label>
+                                </div>
+                            </form>
+                            <form class="input-group" method="post" th:action="@{/bootcamp/professores/remove}">
+                                <div class="form-floating">
+                                    <input required type="email" class="form-control" id="removeProfessorEmail"
+                                           th:field="*{removeProfessor.email}"
+                                           placeholder="Digite o email do professor que deseja remove">
+                                    <label for="removeProfessorEmail">Email</label>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-md-4 px-1" th:if="${bootcamps[__${i.index}__].professores} != null">
                             <p class="text-center fs-3 fw-bold">Candidatos</p>
@@ -97,6 +113,22 @@
                                 <li class="text fs-3"
                                     th:text="${bootcamps[__${i.index}__].candidatos[__${c.index}__].email}"></li>
                             </ul>
+                            <form class="input-group" method="post" th:action="@{/bootcamp/candidatos/add}">
+                                <div class="form-floating">
+                                    <input required type="email" class="form-control" id="addCandidatoEmail"
+                                           th:field="*{addCandidato.email}"
+                                           placeholder="Digite o email do candidato que deseja adicionar">
+                                    <label for="addCandidatoEmail">Email</label>
+                                </div>
+                            </form>
+                            <form class="input-group" method="post" th:action="@{/bootcamp/candidatos/remove}">
+                                <div class="form-floating">
+                                    <input required type="email" class="form-control" id="removeCandidatoEmail"
+                                           th:field="*{removeCandidato.email}"
+                                           placeholder="Digite o email do candidato que deseja remover">
+                                    <label for="removeCandidatoEmail">Email</label>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-md-4 px-1">
                             <p class="text-center fs-3 fw-bold">Coach</p>
@@ -108,7 +140,7 @@
                     </div>
                 </div>
                 <div class="card-footer btn-group">
-                    <a role="button" th:href="@{/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})}"
+                    <a role="button" th:href="@{/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})}"
                        class="btn btn-warning">Editar</a>
                     <a role="button" th:href="@{/bootcamp/deletar/{id}(id = ${bootcamps[__${i.index}__].id})}"
                        class="btn btn-danger">Deletar</a>
