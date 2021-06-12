@@ -11,7 +11,7 @@
 <body>
 
 <main class="container">
-    <form th:action="@{/bootcamp/update/{id}(id = ${bootcamp.bootcampId})}" method="post" class="">
+    <form th:action="@{/bootcamp/update/}" method="post" class="">
         <div>
             <div class="form-floating my-2">
                 <input required type="text" class="form-control" id="nome" th:field="*{bootcamp.nome}"
@@ -38,10 +38,10 @@
                        placeholder="Digite a data do bootcamp">
                 <label for="data">Data do Bootcamp</label>
             </div>
-            <input required type="hidden" name="status"
+            <input required type="hidden" name="status" class="bootcampStatus" th:attr="bootcamp-status=${bootcamp.status}"
                    th:field="${bootcamp.status}">
-            <input required type="hidden" name="bootcampId"
-                   th:field="${bootcamp.bootcampId}">
+            <input required type="hidden" class="bootcampId" th:attr="bootcamp-id=${bootcamp.id}" name="bootcampId"
+                   th:field="${bootcamp.id}">
         </div>
         <div class="my-2">
             <div class="text-center">
@@ -66,58 +66,6 @@
                 <div>
                     <input required type="hidden" name="tipo"
                            th:value="${T(br.com.fiap.bootcamp.entity.TipoUsuario).COACH}">
-                </div>
-            </div>
-        </div>
-        <div class="my-2">
-            <div class="text-center">
-                <h3>Professores</h3>
-            </div>
-            <div class="input-group my-2 justify-content-center" th:each="professor, i : ${bootcamp.professores}">
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="text" class="form-control" id="nomeProfessor" th:field="*{bootcamp.professores[__${i.index}__].nome}"
-                           placeholder="Digite o nome do coach do bootcamp">
-                    <label for="nomeCoach">Nome do Coach</label>
-                </div>
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="email" class="form-control" id="emailProfessor" th:field="*{bootcamp.professores[__${i.index}__].email}"
-                           placeholder="Digite o email do coach ao bootcamp">
-                    <label for="emailCoach">Email do Coach</label>
-                </div>
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="password" class="form-control" id="senhaProfessor"
-                           th:field="*{bootcamp.professores[__${i.index}__].senha}" placeholder="Digite a senha do coach ao bootcamp">
-                    <label for="senhaCoach">Senha do Coach</label>
-                </div>
-                <div>
-                    <input required type="hidden" name="tipo"
-                           th:value="${T(br.com.fiap.bootcamp.entity.TipoUsuario).PROFESSOR}">
-                </div>
-            </div>
-        </div>
-        <div class="my-2">
-            <div class="text-center">
-                <h3>Candidatos</h3>
-            </div>
-            <div class="input-group my-2 justify-content-center" th:each="candidato, j : ${bootcamp.candidatos}">
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="text" class="form-control" id="nomeCandidato" th:field="*{bootcamp.candidatos[__${j.index}__].nome}"
-                           placeholder="Digite o nome do candidato do bootcamp">
-                    <label for="nomeCandidato">Nome do Candidato</label>
-                </div>
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="email" class="form-control" id="emailCandidato" th:field="*{bootcamp.candidatos[__${j.index}__].email}"
-                           placeholder="Digite o email do candidato ao bootcamp">
-                    <label for="emailCandidato">Email do Candidato</label>
-                </div>
-                <div class="form-floating col-md-3 mx-2">
-                    <input required type="password" class="form-control" id="senhaCandidato"
-                           th:field="*{bootcamp.candidatos[__${j.index}__].senha}" placeholder="Digite a senha do candidato ao bootcamp">
-                    <label for="senhaCandidato">Senha do Candidato</label>
-                </div>
-                <div>
-                    <input required type="hidden" name="tipo"
-                           th:value="${T(br.com.fiap.bootcamp.entity.TipoUsuario).CANDIDATO}">
                 </div>
             </div>
         </div>

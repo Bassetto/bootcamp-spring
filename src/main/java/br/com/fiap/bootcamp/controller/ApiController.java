@@ -34,22 +34,22 @@ public class ApiController {
         return bootcampService.update(bootcamp);
     }
 
-    @PostMapping(value = "bootcamp/professores/add")
+    @PostMapping(value = "/bootcamp/professores/add")
     public String addProfessores(@RequestParam Long bootcampId, @RequestBody List<UsuarioDto> professores) {
         return bootcampService.addProfessores(bootcampId, professores);
     }
 
-    @PostMapping(value = "bootcamp/professores/remove")
+    @PostMapping(value = "/bootcamp/professores/remove")
     public String removeProfessores(@RequestParam Long bootcampId, @RequestBody List<UsuarioDto> professores) {
         return bootcampService.removeProfessores(bootcampId, professores);
     }
 
-    @PostMapping(value = "bootcamp/candidatos/add")
+    @PostMapping(value = "/bootcamp/candidatos/add")
     public String addCandidatos(@RequestParam Long bootcampId, @RequestBody List<UsuarioDto> candidatos) {
         return bootcampService.addCandidatos(bootcampId, candidatos);
     }
 
-    @PostMapping(value = "bootcamp/candidatos/remove")
+    @PostMapping(value = "/bootcamp/candidatos/remove")
     public String removeCandidatos(@RequestParam Long bootcampId, @RequestBody List<UsuarioDto> candidatos) {
         return bootcampService.removeCandidatos(bootcampId, candidatos);
     }
@@ -59,7 +59,7 @@ public class ApiController {
         return bootcampService.deleteById(id);
     }
 
-    @GetMapping(value = "usuario/list")
+    @GetMapping(value = "/usuario/list")
     public List<UsuarioDto> listUsuarios() {
         return usuarioService.listUsuarios();
     }

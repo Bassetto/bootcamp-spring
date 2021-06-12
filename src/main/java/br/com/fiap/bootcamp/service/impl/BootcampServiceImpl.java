@@ -57,15 +57,16 @@ public class BootcampServiceImpl implements BootcampService {
             BootcampEntity entity = bootcampOpt.get();
             List<UsuarioEntity> professoresEntities = entity.getProfessores();
             UsuarioEntity professor;
-            for (int i = 0; i < professoresOpts.size(); i++) {
-                if (professoresOpts.get(i).isPresent()) {
-                    professor = professoresOpts.get(i).get();
+            for (Optional<UsuarioEntity> professoresOpt : professoresOpts) {
+                if (professoresOpt.isPresent()) {
+                    professor = professoresOpt.get();
                     if (!professoresEntities.contains(professor)) {
                         professoresEntities.add(professor);
                     }
-                } else {
-                    professoresEntities.add(usuarioService.save(professores.get(i)));
                 }
+            }
+            if (entity.getProfessores().equals(professoresEntities)) {
+                return "Professores não encontrados";
             }
             entity.setProfessores(professoresEntities);
             bootcampRepository.save(entity);
@@ -93,20 +94,24 @@ public class BootcampServiceImpl implements BootcampService {
 
     @Override
     public String addCandidatos(Long bootcampId, List<UsuarioDto> candidatos) {
+        assert (bootcampId != null);
+        assert (candidatos != null);
         List<Optional<UsuarioEntity>> candidatosOpts = candidatos.stream().map(candidato -> Optional.ofNullable(usuarioService.findByEmail(candidato.getEmail()))).collect(Collectors.toList());
         Optional<BootcampEntity> bootcampOpt = bootcampRepository.findById(bootcampId);
         if (bootcampOpt.isPresent()) {
             BootcampEntity entity = bootcampOpt.get();
             List<UsuarioEntity> candidatosEntities = entity.getCandidatos();
             UsuarioEntity candidato;
-            for (int i = 0; i < candidatosOpts.size(); i++) {
-                if (candidatosOpts.get(i).isPresent()) {
-                    candidato = candidatosOpts.get(i).get();
+            for (Optional<UsuarioEntity> candidatosOpt : candidatosOpts) {
+                if (candidatosOpt.isPresent()) {
+                    candidato = candidatosOpt.get();
                     if (!candidatosEntities.contains(candidato)) {
                         candidatosEntities.add(candidato);
-                    }                } else {
-                    candidatosEntities.add(usuarioService.save(candidatos.get(i)));
+                    }
                 }
+            }
+            if (entity.getCandidatos().equals(candidatosEntities)) {
+                return "Candidatos não encontrados";
             }
             entity.setCandidatos(candidatosEntities);
             bootcampRepository.save(entity);
@@ -134,7 +139,7 @@ public class BootcampServiceImpl implements BootcampService {
 
     @Override
     public String update(BootcampDto dto) {
-        Optional<BootcampEntity> opt = Optional.ofNullable(findById(dto.getId()));
+        Optional<BootcampEntity> opt = bootcampRepository.findById(dto.getId());
         if (opt.isPresent()) {
             BootcampEntity entity = opt.get();
             entity.setNome(dto.getNome());
@@ -152,10 +157,9 @@ public class BootcampServiceImpl implements BootcampService {
     }
 
     @Override
-    public BootcampEntity findById(Long id) {
-        BootcampEntity bootcamp = new BootcampEntity();
+    public BootcampDto findById(Long id) {
         Optional<BootcampEntity> opt = bootcampRepository.findById(id);
-        return opt.orElse(bootcamp);
+        return opt.map(this::bootcampToDto).orElse(null);
     }
 
     @Override
@@ -168,7 +172,7 @@ public class BootcampServiceImpl implements BootcampService {
                 return null;
             }
         } catch (InterruptedException | ExecutionException ignored) {
-            ignored.printStackTrace();
+//            ignored.printStackTrace();
             return null;
         }
     }

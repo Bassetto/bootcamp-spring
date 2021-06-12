@@ -1,6 +1,7 @@
 package br.com.fiap.bootcamp.service.impl;
 
 import br.com.fiap.bootcamp.dto.UsuarioDto;
+import br.com.fiap.bootcamp.entity.BootcampEntity;
 import br.com.fiap.bootcamp.entity.UsuarioEntity;
 import br.com.fiap.bootcamp.repository.UsuarioRepository;
 import br.com.fiap.bootcamp.service.UsuarioService;
@@ -43,7 +44,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDto register(UsuarioDto dto) {
-        return usuarioToDto(save(dto));
+        Optional<UsuarioEntity> opt = Optional.ofNullable(save(dto));
+        return opt.map(this::usuarioToDto).orElse(null);
     }
 
     @Override
@@ -98,7 +100,17 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioEntity findByEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+        try {
+            Future<UsuarioEntity> entity = usuarioRepository.findByEmail(email);
+            if (entity.isDone()) {
+                return entity.get();
+            } else {
+                return null;
+            }
+        } catch (InterruptedException | ExecutionException ignored) {
+//            ignored.printStackTrace();
+            return null;
+        }
     }
 
     @Override

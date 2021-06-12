@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/bootcamp")
+@RequestMapping(value  = "/bootcamp")
 public class BootcampController {
 
     @Autowired
     BootcampService bootcampService;
 
-    @GetMapping("/listar")
+    @GetMapping(value  = "/listar")
     public ModelAndView listar() {
         ModelAndView view = new ModelAndView("lista-bootcamps");
         ArrayList<BootcampDto> bootcamps = new ArrayList<BootcampDto>(bootcampService.listBootcamps());
@@ -33,7 +33,7 @@ public class BootcampController {
         return view;
     }
 
-    @GetMapping("/cadastrar")
+    @GetMapping(value  = "/cadastrar")
     public ModelAndView cadastrar() {
         ModelAndView view = new ModelAndView("cadastrar-bootcamp");
         BootcampDto bootcamp = new BootcampDto();
@@ -45,7 +45,7 @@ public class BootcampController {
         return view;
     }
 
-    @PostMapping("/salvar")
+    @PostMapping(value  = "/salvar")
     public String salvar(@ModelAttribute("bootcamp") BootcampDto bootcamp, BindingResult result) {
         if (!result.hasErrors()) {
 
@@ -59,7 +59,7 @@ public class BootcampController {
         return "redirect:/error";
     }
 
-    @PostMapping("/update/")
+    @PostMapping(value  = "/update")
     public String update(@ModelAttribute("bootcamp") BootcampDto bootcamp, BindingResult result) {
         if (!result.hasErrors()) {
             System.out.println(bootcamp.getId());
@@ -68,52 +68,49 @@ public class BootcampController {
         return "redirect:/bootcamp/listar";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping(value  = "/editar/{id}")
     public ModelAndView editar(@PathVariable Long id) {
         if (id >= 0) {
             ModelAndView view = new ModelAndView("editar-bootcamp");
-            BootcampEntity bootcamp = bootcampService.findById(id);
+            BootcampDto bootcamp = bootcampService.findById(id);
             view.addObject("bootcamp", bootcamp);
             return view;
         }
         return listar();
     }
 
-    @PostMapping("/professores/add")
-    public String addProfessor(@ModelAttribute("addProfessor") UsuarioDto professor) {
-        List<UsuarioDto> professores = List.of(professor);
-        bootcampService.addProfessores(professor.getId(), professores);
-        return "redirect:/bootcamp/listar";
-    }
-
-    @PostMapping("/professores/remove")
-    public String removeProfessor(@ModelAttribute("removeProfessor") UsuarioDto professor) {
-        List<UsuarioDto> professores = List.of(professor);
-        bootcampService.removeProfessores(professor.getId(), professores);
-        return "redirect:/bootcamp/listar";
-    }
-
-    @PostMapping("/candidatos/add")
-    public String addCandidato(@ModelAttribute("addCandidato") UsuarioDto candidato) {
-        List<UsuarioDto> candidatos = List.of(candidato);
-        bootcampService.addCandidatos(candidato.getId(), candidatos);
-        return "redirect:/bootcamp/listar";
-    }
-
-    @PostMapping("/candidatos/add")
-    public String removeCandidato(@ModelAttribute("removeCandidato") UsuarioDto candidato) {
-        List<UsuarioDto> candidatos = List.of(candidato);
-        bootcampService.removeCandidatos(candidato.getId(), candidatos);
-        return "redirect:/bootcamp/listar";
-    }
-
-    @DeleteMapping("/deletar/{id}")
+    @GetMapping(value  = "/deletar/{id}")
     public String deletar(@PathVariable Long id) {
         bootcampService.deleteById(id);
         return "redirect:/bootcamp/listar";
     }
 
-    @GetMapping("/error")
+    @PostMapping(value  = "/professor/add")
+    public String addProfessor(@ModelAttribute("addProfessor") UsuarioDto professor) {
+        bootcampService.addProfessores(professor.getId(), List.of(professor));
+        return "redirect:/bootcamp/listar";
+    }
+
+    @PostMapping(value = "/professor/remove")
+    public String removeProfessor(@ModelAttribute("removeProfessor") UsuarioDto professor) {
+        bootcampService.removeProfessores(professor.getId(), List.of(professor));
+        return "redirect:/bootcamp/listar";
+    }
+
+    @PostMapping(value = "/candidato/add")
+    public String addCandidato(@ModelAttribute("addCandidato") UsuarioDto candidato) {
+        System.out.println("Id: " + candidato.getId() + " Email: " + candidato.getEmail());
+        bootcampService.addCandidatos(candidato.getId(), List.of(candidato));
+        return "redirect:/bootcamp/listar";
+    }
+
+    @PostMapping(value = "/candidato/remove")
+    public String removeCandidato(@ModelAttribute("removeCandidato") UsuarioDto candidato) {
+        bootcampService.removeCandidatos(candidato.getId(), List.of(candidato));
+        return "redirect:/bootcamp/listar";
+    }
+
+    @GetMapping(value  = "/error")
     public ModelAndView error() {
         return new ModelAndView("error");
     }

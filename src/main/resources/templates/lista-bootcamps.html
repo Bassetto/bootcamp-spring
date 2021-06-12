@@ -17,7 +17,7 @@
                 <li><a th:href="@{/}" class="nav-link px-2 link-dark">Home</a></li>
                 <li><a th:href="@{/bootcamp/listar}" class="nav-link px-2 disabled">Lista de Bootcamps</a></li>
                 <li><a th:href="@{/bootcamp/cadastrar}" class="nav-link px-2 link-dark">Cadastrar bootcamp</a></li>
-                <li><a th:href="@{/cadastro}" class="nav-link px-2 link-dark">Cadastrar candidato</a></li>
+                <li><a th:href="@{/cadastro}" class="nav-link px-2 link-dark">Cadastrar usuário</a></li>
                 <li><a th:href="@{/login}" class="nav-link px-2 link-dark">Fazer login</a></li>
             </ul>
         </div>
@@ -88,21 +88,25 @@
                                 <li class="text fs-3"
                                     th:text="${bootcamps[__${i.index}__].professores[__${j.index}__].email}"></li>
                             </ul>
-                            <form class="input-group" method="post" th:action="@{/bootcamp/professores/add}">
+                            <form class="input-group my-1 card" method="post" th:action="@{/bootcamp/professor/add}">
                                 <div class="form-floating">
                                     <input required type="email" class="form-control" id="addProfessorEmail"
                                            th:field="*{addProfessor.email}"
                                            placeholder="Digite o email do professor que deseja adicionar">
                                     <label for="addProfessorEmail">Email</label>
                                 </div>
+                                <input type="hidden" class="addProfessor" th:attr="bootcamp-id=${bootcamps[__${i.index}__].id}" th:field="${addProfessor.id}">
+                                <input type="submit" class="btn btn-primary" value="Salvar Professor">
                             </form>
-                            <form class="input-group" method="post" th:action="@{/bootcamp/professores/remove}">
+                            <form class="input-group my-1 card" method="post" th:action="@{/bootcamp/professor/remove}">
                                 <div class="form-floating">
                                     <input required type="email" class="form-control" id="removeProfessorEmail"
                                            th:field="*{removeProfessor.email}"
                                            placeholder="Digite o email do professor que deseja remove">
                                     <label for="removeProfessorEmail">Email</label>
                                 </div>
+                                <input type="hidden" class="removeProfessor" th:attr="bootcamp-id=${bootcamps[__${i.index}__].id}" th:field="${removeProfessor.id}">
+                                <input type="submit" class="btn btn-primary" value="Remover Professor">
                             </form>
                         </div>
                         <div class="col-md-4 px-1" th:if="${bootcamps[__${i.index}__].professores} != null">
@@ -113,21 +117,25 @@
                                 <li class="text fs-3"
                                     th:text="${bootcamps[__${i.index}__].candidatos[__${c.index}__].email}"></li>
                             </ul>
-                            <form class="input-group" method="post" th:action="@{/bootcamp/candidatos/add}">
+                            <form class="input-group my-1 card" method="post" th:action="@{/bootcamp/candidato/add}">
                                 <div class="form-floating">
                                     <input required type="email" class="form-control" id="addCandidatoEmail"
                                            th:field="*{addCandidato.email}"
                                            placeholder="Digite o email do candidato que deseja adicionar">
                                     <label for="addCandidatoEmail">Email</label>
                                 </div>
+                                <input type="hidden" class="addCandidato" th:attr="bootcamp-id=${bootcamps[__${i.index}__].id}" th:field="${addCandidato.id}">
+                                <input type="submit" class="btn btn-primary" value="Salvar Candidato">
                             </form>
-                            <form class="input-group" method="post" th:action="@{/bootcamp/candidatos/remove}">
+                            <form class="input-group my-1 card" method="post" th:action="@{/bootcamp/candidato/remove}">
                                 <div class="form-floating">
                                     <input required type="email" class="form-control" id="removeCandidatoEmail"
                                            th:field="*{removeCandidato.email}"
                                            placeholder="Digite o email do candidato que deseja remover">
                                     <label for="removeCandidatoEmail">Email</label>
                                 </div>
+                                <input type="hidden" class="removeCandidato" th:attr="bootcamp-id=${bootcamps[__${i.index}__].id}" th:field="${removeCandidato.id}">
+                                <input type="submit" class="btn btn-primary" value="Remover Candidato">
                             </form>
                         </div>
                         <div class="col-md-4 px-1">
@@ -140,7 +148,7 @@
                     </div>
                 </div>
                 <div class="card-footer btn-group">
-                    <a role="button" th:href="@{/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})}"
+                    <a role="button" th:href="@{/bootcamp/editar/{id}(id = ${bootcamps[__${i.index}__].id})}"
                        class="btn btn-warning">Editar</a>
                     <a role="button" th:href="@{/bootcamp/deletar/{id}(id = ${bootcamps[__${i.index}__].id})}"
                        class="btn btn-danger">Deletar</a>
@@ -150,5 +158,6 @@
     </div>
 </main>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/getids_listagem.js}"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@ public interface BootcampService {
 
     String update(BootcampDto dto);
 
-    BootcampEntity findById(Long id);
+    BootcampDto findById(Long id);
 
     BootcampEntity findByName(String nome);
 
